@@ -7,8 +7,10 @@ venv/
 .venv/
 
 # Data - use DVC instead
-data/raw/
-data/processed/
+data/raw/*
+!data/raw/*.dvc
+data/processed/*
+!data/processed/*.dvc
 
 # MLflow
 mlruns/
