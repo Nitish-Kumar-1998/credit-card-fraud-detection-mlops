@@ -11,7 +11,8 @@ data/raw/*
 !data/raw/*.dvc
 data/processed/*
 !data/processed/*.dvc
-
+*.png
+reports/
 # MLflow
 mlruns/
 mlflow.db
@@ -24,3 +25,5 @@ mlflow.db
 
 # Docker
 *.log
+mlartifacts/
+mlruns/
