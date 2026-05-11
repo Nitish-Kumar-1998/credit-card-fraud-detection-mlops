@@ -28,6 +28,18 @@ class Transaction(BaseModel):
 def root():
     return {"message": "Fraud Detection API is running"}
 
+
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "model": "fraud-detection-model",
+        "version": "1",
+        "stage": "Production"
+    }
+
+
+
 @app.post("/predict")
 def predict(transaction: Transaction):
     data = pd.DataFrame([transaction.dict()])
