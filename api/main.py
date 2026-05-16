@@ -1,22 +1,16 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import mlflow
-import mlflow.pyfunc
+import xgboost as xgb
 import pandas as pd
-
-
+import numpy as np
 import os
-mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000"))
 
-
-
-
-# Load model from MLflow registry
-model = mlflow.pyfunc.load_model("models:/fraud-detection-model/1")
+# Load model from file
+model = xgb.Booster()
+model.load_model("models/xgboost_model.json")
 
 app = FastAPI(title="Fraud Detection API")
 
-# Define input schema
 class Transaction(BaseModel):
     V1: float; V2: float; V3: float; V4: float
     V5: float; V6: float; V7: float; V8: float
@@ -32,7 +26,6 @@ class Transaction(BaseModel):
 def root():
     return {"message": "Fraud Detection API is running"}
 
-
 @app.get("/health")
 def health():
     return {
@@ -42,13 +35,12 @@ def health():
         "stage": "Production"
     }
 
-
-
 @app.post("/predict")
 def predict(transaction: Transaction):
     data = pd.DataFrame([transaction.dict()])
-    probability = model.predict(data)[0]
+    dmatrix = xgb.DMatrix(data)
+    probability = float(model.predict(dmatrix)[0])
     return {
-        "fraud_probability": round(float(probability), 4),
+        "fraud_probability": round(probability, 4),
         "is_fraud": bool(probability > 0.5)
     }
