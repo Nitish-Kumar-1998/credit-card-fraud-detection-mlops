@@ -1,3 +1,11 @@
+
+## Live API
+Base URL: `https://credit-card-fraud-detection-mlops.onrender.com`
+
+- Health check: https://credit-card-fraud-detection-mlops.onrender.com/health
+- API docs: https://credit-card-fraud-detection-mlops.onrender.com/docs
+
+
 # Fraud Detection MLOps Pipeline
 
 End-to-end ML pipeline for credit card fraud detection with full MLOps tooling.
