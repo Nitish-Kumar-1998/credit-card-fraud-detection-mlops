@@ -185,17 +185,5 @@ XGBoost is a black box. SHAP explains why each prediction was made. V14 confirme
 **Why Evidently?**
 Fraud patterns change over time as fraudsters adapt. Evidently monitors whether incoming data distribution has shifted from training data. If more than 30% of features drift, model retraining should be triggered.
 
-## Interview Q&A
 
-**Why PR-AUC not ROC-AUC?**
-ROC-AUC looks at TPR vs FPR. With 99.8% negatives, even a bad model gets high ROC-AUC because FPR stays low. PR-AUC looks at precision-recall tradeoff — directly sensitive to minority class performance.
-
-**What is SMOTE?**
-Synthetic Minority Over-sampling Technique. For each fraud case, finds K nearest neighbors in feature space and creates synthetic samples along line segments between them. Risk: if applied before split, synthetic samples leak test information into training.
-
-**What does SHAP tell you?**
-V14 is the most important feature. Low V14 values push the model strongly toward fraud prediction. This is consistent with EDA where fraud transactions showed V14 shifted to -5 to -7 range.
-
-**How would you handle model drift in production?**
-Monitor feature distributions using KS test comparing training vs production data. If drift share exceeds 30%, trigger retraining pipeline. Also monitor prediction distribution and actual performance metrics when labels become available via chargeback reports.
 
